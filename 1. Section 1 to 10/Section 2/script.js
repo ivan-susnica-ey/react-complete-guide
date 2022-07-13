@@ -102,4 +102,11 @@ const dog2 = {
 // console.log(dog2);
 
 const numbers = [1, 2, 3];
-console.log(numbers.map((e) => e * 2));
+// console.log(numbers.map((e) => e * 2));
+
+// class SomeComponent extends Component {
+//     state = {
+//       count: 0
+//     }
+//     ...
+//   }
