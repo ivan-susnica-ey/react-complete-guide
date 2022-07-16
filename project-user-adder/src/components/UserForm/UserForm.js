@@ -51,14 +51,12 @@ const UserForm = (props) => {
           <p>{message}</p>
         </ErrorModal>
       )}
-      <form onSubmit={formSubmitHandler} style={{ height: "auto" }}>
-        <div className={styles["user-form"]}>
-          <label>Username: </label>
-          <input type="text" value={enteredName} onChange={nameAddHandler} />
-          <label>Age: </label>
-          <input type="number" value={enteredAge} onChange={ageAddHandler} />
-          <Button>Add user</Button>
-        </div>
+      <form onSubmit={formSubmitHandler} className={styles.form}>
+        <label>Username: </label>
+        <input type="text" value={enteredName} onChange={nameAddHandler} />
+        <label>Age: </label>
+        <input type="number" value={enteredAge} onChange={ageAddHandler} />
+        <Button>Add user</Button>
       </form>
     </>
   );
