@@ -9,7 +9,7 @@ const ErrorModal = (props) => {
   return (
     <div className={styles.outer}>
       <div className={styles.inner}>
-        <h3>Invalid input</h3>
+        <h3>{props.title}</h3>
         {props.children}
         <Button type="button" onClick={closeModal}>
           Okay

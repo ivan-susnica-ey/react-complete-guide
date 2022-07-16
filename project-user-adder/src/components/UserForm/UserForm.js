@@ -6,7 +6,9 @@ import ErrorModal from "../../UI/ErrorModal";
 const UserForm = (props) => {
   const [enteredName, setEnteredName] = useState("");
   const [enteredAge, setEnteredAge] = useState("");
+
   const [message, setMessage] = useState("");
+  const [title, setTitle] = useState("");
 
   const [isValid, setIsValid] = useState(true);
 
@@ -23,12 +25,14 @@ const UserForm = (props) => {
 
     if (enteredName.trim().length === 0 || enteredAge.trim().length === 0) {
       setMessage("Plase enter a valid name and age (non-empty values)");
+      setTitle("Invalid input");
       setIsValid(false);
       return;
     }
 
     if (enteredAge < 0) {
       setMessage("Please enter a valid age (>0).");
+      setTitle("Invalid age");
       setIsValid(false);
       return;
     }
@@ -48,7 +52,7 @@ const UserForm = (props) => {
   return (
     <>
       {!isValid && (
-        <ErrorModal setIsValid={setIsValid}>
+        <ErrorModal setIsValid={setIsValid} title={title}>
           <p>{message}</p>
         </ErrorModal>
       )}
