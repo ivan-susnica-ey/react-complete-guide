@@ -10,7 +10,7 @@ const UserForm = (props) => {
   const [message, setMessage] = useState("");
   const [title, setTitle] = useState("");
 
-  const [isValid, setIsValid] = useState(true);
+  const [modalClosed, setModalClosed] = useState(true);
 
   const nameAddHandler = (event) => {
     setEnteredName(event.target.value);
@@ -26,14 +26,14 @@ const UserForm = (props) => {
     if (enteredName.trim().length === 0 || enteredAge.trim().length === 0) {
       setMessage("Plase enter a valid name and age (non-empty values)");
       setTitle("Invalid input");
-      setIsValid(false);
+      setModalClosed(false);
       return;
     }
 
     if (enteredAge < 0) {
       setMessage("Please enter a valid age (>0).");
       setTitle("Invalid age");
-      setIsValid(false);
+      setModalClosed(false);
       return;
     }
 
@@ -51,8 +51,8 @@ const UserForm = (props) => {
 
   return (
     <>
-      {!isValid && (
-        <ErrorModal setIsValid={setIsValid} title={title}>
+      {!modalClosed && (
+        <ErrorModal setModalClosed={setModalClosed} title={title}>
           <p>{message}</p>
         </ErrorModal>
       )}

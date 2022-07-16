@@ -3,7 +3,7 @@ import Button from "./Button";
 
 const ErrorModal = (props) => {
   const closeModal = () => {
-    props.setIsValid(true);
+    props.setModalClosed(true);
   };
 
   return (
