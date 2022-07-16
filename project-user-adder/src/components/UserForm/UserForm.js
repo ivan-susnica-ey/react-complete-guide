@@ -36,6 +36,7 @@ const UserForm = (props) => {
     const userData = {
       name: enteredName,
       age: enteredAge * 1,
+      id: Math.random().toString(),
     };
 
     props.addUser(userData);
