@@ -11,7 +11,9 @@ const ErrorModal = (props) => {
       <div className={styles.inner}>
         <h3>Invalid input</h3>
         {props.children}
-        <Button onClick={closeModal}>Okay</Button>
+        <Button type="button" onClick={closeModal}>
+          Okay
+        </Button>
       </div>
     </div>
   );

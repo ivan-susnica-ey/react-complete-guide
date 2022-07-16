@@ -56,7 +56,7 @@ const UserForm = (props) => {
         <input type="text" value={enteredName} onChange={nameAddHandler} />
         <label>Age: </label>
         <input type="number" value={enteredAge} onChange={ageAddHandler} />
-        <Button>Add user</Button>
+        <Button type="submit">Add user</Button>
       </form>
     </>
   );
