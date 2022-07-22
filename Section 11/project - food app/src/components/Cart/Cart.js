@@ -1,11 +1,32 @@
 import classes from "./Cart.module.css";
+
 import Modal from "../UI/Modal";
+import CartItem from "./CartItem";
+
+import { useContext } from "react";
+import CartContext from "../../store/cart-context";
 
 const Cart = (props) => {
+  const ctx = useContext(CartContext);
+
+  const addHandler = (item) => {
+    ctx.addItem({ ...item, amount: 1 });
+  };
+  const removeHandler = (id) => {
+    ctx.removeItem(id);
+  };
+
   const cartItems = (
     <ul className={classes["cart-items"]}>
-      {[{ id: "c1", name: "Sushi", amount: 2, price: 12.99 }].map((item) => (
-        <li key={Math.random().toString()}>{item.name}</li>
+      {ctx.items.map((item) => (
+        <CartItem
+          name={item.name}
+          amount={item.amount}
+          key={item.id}
+          price={item.price}
+          onRemove={removeHandler.bind(null, item.id)}
+          onAdd={addHandler.bind(null, item)}
+        ></CartItem>
       ))}
     </ul>
   );
@@ -15,7 +36,7 @@ const Cart = (props) => {
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
-        <span>35.62</span>
+        <span>$ {ctx.totalAmount.toFixed(2)}</span>
       </div>
       <div className={classes.actions}>
         <button
@@ -24,7 +45,9 @@ const Cart = (props) => {
         >
           Close
         </button>
-        <button className={classes.button}>Order</button>
+        {ctx.items.length > 0 && (
+          <button className={classes.button}>Order</button>
+        )}
       </div>
     </Modal>
   );
