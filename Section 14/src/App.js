@@ -14,7 +14,9 @@ function App() {
     setError(null);
 
     try {
-      const res = await fetch("https://swapi.dev/api/films/");
+      const res = await fetch(
+        "https://react-http-2ef2f-default-rtdb.firebaseio.com/movies.json"
+      );
 
       if (!res.ok) {
         throw new Error("Something went wrong!");
@@ -23,7 +25,21 @@ function App() {
       const data = await res.json();
       // moguce je i transformisati podatke ovde u novi objekat koji se salje dalje
 
-      setMovies(data.results);
+      const loadedMovies = []; //array full of objects from for in loop
+
+      for (const key in data) {
+        // for in loop - to go through all the keys in data object
+        //keys are the IDs of the movies (that criptic data)
+        loadedMovies.push({
+          id: key,
+          title: data[key].title, // here we're drilling into that nested object where
+          //we have title, openingText and releaseDate
+          openingText: data[key].openingText,
+          releaseDate: data[key].releaseDate, // this is how we dynamically access the property in JS
+        });
+      }
+
+      setMovies(loadedMovies);
       setIsLoading(false);
     } catch (error) {
       setError(error.message); // now error is a string
@@ -35,8 +51,19 @@ function App() {
     fetchMovieHandler();
   }, [fetchMovieHandler]);
 
-  function addMovieHandler(movie) {
-    console.log(movie);
+  async function addMovieHandler(movie) {
+    const res = await fetch(
+      "https://react-http-2ef2f-default-rtdb.firebaseio.com/movies.json",
+      {
+        method: "POST",
+        body: JSON.stringify(movie),
+        headers: {
+          "Content-Type": "applicaton/json",
+        },
+      }
+    );
+    const data = await res.json();
+    console.log(data);
   }
 
   let content = <p>Found no movies.</p>;
