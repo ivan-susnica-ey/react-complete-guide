@@ -72,13 +72,14 @@ const Login = (props) => {
   const passwordInputRef = useRef();
 
   useEffect(() => {
+    console.log("useEffect runs");
     const identifier = setTimeout(() => {
-      // console.log("checking form validity");
       setFormIsValid(emailIsValid && passwordIsValid);
-    }, 500);
+      console.log("validation runs");
+    }, 2000);
 
     return () => {
-      // console.log("cleanup");
+      console.log("cleanup");
       clearTimeout(identifier);
     };
   }, [emailIsValid, passwordIsValid]);
