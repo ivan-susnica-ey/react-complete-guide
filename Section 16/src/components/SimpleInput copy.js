@@ -3,11 +3,13 @@ import { useState } from "react";
 const SimpleInput = (props) => {
   const [name, setName] = useState("");
   const [nameIsTouched, setNameIsTouched] = useState(false);
+  // const [formIsValid, setFormIsValid] = useState(false);
 
   const [email, setEmail] = useState("");
   const [emailIsTouched, setEmailIsTouched] = useState(false);
 
   const enteredNameIsValid = name.trim() !== "";
+  // da imamo 2 inputa bila bi jos 1 const za entered age pa bi to bio drugi dependancy u useEffect-u
   const nameInputIsInvalid = !enteredNameIsValid && nameIsTouched;
 
   const enteredEmailIsValid = email.trim() !== "" && email.trim().includes("@");
@@ -18,6 +20,14 @@ const SimpleInput = (props) => {
   if (enteredNameIsValid && enteredEmailIsValid) {
     formIsValid = true;
   }
+
+  // useEffect(() => {
+  //   if (enteredNameIsValid) {
+  //     setFormIsValid(true);
+  //   } else {
+  //     setFormIsValid(false);
+  //   }
+  // }, [enteredNameIsValid]);
 
   const nameHandler = (event) => {
     setName(event.target.value);
