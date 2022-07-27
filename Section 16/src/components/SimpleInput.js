@@ -1,17 +1,23 @@
-import { useState } from "react";
+import useInput from "../hooks/use-input";
 
 const SimpleInput = (props) => {
-  const [name, setName] = useState("");
-  const [nameIsTouched, setNameIsTouched] = useState(false);
+  const {
+    value: name,
+    valueInputIsInvalid: nameInputIsInvalid,
+    enteredValueIsValid: enteredNameIsValid,
+    enteredValueHandler: nameHandler,
+    enteredValueBlurHandler: nameBlurHandler,
+    reset: resetName,
+  } = useInput((value) => value.trim() !== "");
 
-  const [email, setEmail] = useState("");
-  const [emailIsTouched, setEmailIsTouched] = useState(false);
-
-  const enteredNameIsValid = name.trim() !== "";
-  const nameInputIsInvalid = !enteredNameIsValid && nameIsTouched;
-
-  const enteredEmailIsValid = email.trim() !== "" && email.trim().includes("@");
-  const emailInputIsInvalid = !enteredEmailIsValid && emailIsTouched;
+  const {
+    value: email,
+    valueInputIsInvalid: emailInputIsInvalid,
+    enteredValueIsValid: enteredEmailIsValid,
+    enteredValueHandler: emailHandler,
+    enteredValueBlurHandler: emailBlurHandler,
+    reset: resetEmail,
+  } = useInput((value) => value.trim().includes("@"));
 
   let formIsValid = false;
 
@@ -19,24 +25,8 @@ const SimpleInput = (props) => {
     formIsValid = true;
   }
 
-  const nameHandler = (event) => {
-    setName(event.target.value);
-  };
-  const emailHandler = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const nameBlurHandler = () => {
-    setNameIsTouched(true);
-  };
-  const emailBlurHandler = () => {
-    setEmailIsTouched(true);
-  };
-
   const formHandler = (event) => {
     event.preventDefault();
-    setNameIsTouched(true);
-    setEmailIsTouched(true);
 
     if (!enteredNameIsValid || !enteredEmailIsValid) {
       return;
@@ -45,11 +35,8 @@ const SimpleInput = (props) => {
     console.log(name);
     console.log(email);
 
-    setName("");
-    setEmail("");
-
-    setNameIsTouched(false);
-    setEmailIsTouched(false);
+    resetName();
+    resetEmail();
   };
 
   return (
