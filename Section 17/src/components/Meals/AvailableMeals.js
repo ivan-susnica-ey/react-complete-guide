@@ -1,36 +1,52 @@
+import { useEffect, useState } from "react";
 import Card from "../UI/Card";
 import classes from "./AvailableMeals.module.css";
 import MealItem from "./MealItem/MealItem";
 
-const DUMMY_MEALS = [
-  {
-    id: "m1",
-    name: "Sushi",
-    description: "Finest fish and veggies",
-    price: 22.99,
-  },
-  {
-    id: "m2",
-    name: "Schnitzel",
-    description: "A german specialty!",
-    price: 16.5,
-  },
-  {
-    id: "m3",
-    name: "Barbecue Burger",
-    description: "American, raw, meaty",
-    price: 12.99,
-  },
-  {
-    id: "m4",
-    name: "Green Bowl",
-    description: "Healthy...and green...",
-    price: 18.99,
-  },
-];
-
 const AvailableMeals = () => {
-  const mealsList = DUMMY_MEALS.map((meal) => (
+  const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchMeals = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const res = await fetch(
+          "https://react-http-2ef2f-default-rtdb.firebaseio.com/meals.json"
+        );
+
+        if (!res.ok) {
+          throw new Error("Something went wrong!");
+        }
+
+        const data = await res.json();
+
+        const loadedMeals = [];
+
+        for (const key in data) {
+          loadedMeals.push({
+            id: key,
+            name: data[key].name,
+            descrption: data[key].description,
+            price: data[key].price,
+          });
+        }
+
+        setMeals(loadedMeals);
+        setIsLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setIsLoading(false);
+      }
+    };
+    fetchMeals();
+    //moze i ovde try catch blok ... ali treba nam i .catch() na promise
+  }, []);
+
+  const mealsList = meals.map((meal) => (
     <MealItem
       id={meal.id}
       key={meal.id}
@@ -39,11 +55,22 @@ const AvailableMeals = () => {
       price={meal.price}
     />
   ));
+
+  let content = <p>Found no meals!</p>;
+
+  if (meals.length > 0) {
+    content = <ul>{mealsList}</ul>;
+  }
+  if (error) {
+    content = <p className={classes.error}>{error}</p>;
+  }
+  if (isLoading) {
+    content = <p className={classes.loading}>Loading...</p>;
+  }
+
   return (
     <section className={classes.meals}>
-      <Card>
-        <ul>{mealsList}</ul>
-      </Card>
+      <Card>{content}</Card>
     </section>
   );
 };

@@ -36,6 +36,11 @@ const BasicForm = (props) => {
   const submitFormHandler = (event) => {
     event.preventDefault();
 
+    //in case user enables the button with dev tools
+    if (!formIsValid) {
+      return;
+    }
+
     console.log(name);
     console.log(lastName);
     console.log(email);
