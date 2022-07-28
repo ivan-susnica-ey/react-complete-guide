@@ -11,6 +11,9 @@ const Cart = (props) => {
   const ctx = useContext(CartContext);
   const [checkoutVisible, setCheckoutVisible] = useState(false);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [didSubmit, setDidSubmit] = useState(false);
+
   const addHandler = (item) => {
     ctx.addItem({ ...item, amount: 1 });
   };
@@ -20,6 +23,23 @@ const Cart = (props) => {
 
   const checkoutHandler = () => {
     setCheckoutVisible(true);
+  };
+
+  const submitDataHandler = async (formData) => {
+    setIsSubmitting(true);
+    await fetch(
+      "https://react-http-2ef2f-default-rtdb.firebaseio.com/orders.json",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          order: formData,
+          orderedItems: ctx.items,
+        }),
+      }
+    );
+    setIsSubmitting(false);
+    setDidSubmit(true);
+    ctx.clearCart();
   };
 
   const cartItems = (
@@ -37,8 +57,8 @@ const Cart = (props) => {
     </ul>
   );
 
-  return (
-    <Modal onClick={props.hideCartHandler}>
+  const cartModalContent = (
+    <>
       {cartItems}
 
       <div className={classes.total}>
@@ -46,7 +66,12 @@ const Cart = (props) => {
         <span>$ {ctx.totalAmount.toFixed(2)}</span>
       </div>
 
-      {checkoutVisible && <Checkout hideCartHandler={props.hideCartHandler} />}
+      {checkoutVisible && (
+        <Checkout
+          submitDataHandler={submitDataHandler}
+          hideCartHandler={props.hideCartHandler}
+        />
+      )}
       {!checkoutVisible && (
         <div className={classes.actions}>
           <button
@@ -62,6 +87,23 @@ const Cart = (props) => {
           )}
         </div>
       )}
+    </>
+  );
+
+  const isSubmittingModalContent = <p>Sending order data ...</p>;
+
+  const didSubmitModalContent = (
+    <p>
+      Successfully sent the order! You will be contacted once the order is
+      prepared.
+    </p>
+  );
+
+  return (
+    <Modal onClick={props.hideCartHandler}>
+      {!isSubmitting && !didSubmit && cartModalContent}
+      {isSubmitting && isSubmittingModalContent}
+      {didSubmit && didSubmitModalContent}
     </Modal>
   );
 };

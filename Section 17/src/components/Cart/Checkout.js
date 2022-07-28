@@ -46,15 +46,23 @@ const Checkout = (props) => {
   const formHandler = (event) => {
     event.preventDefault();
 
-    // const enteredName = name;
-    // const enteredStreet = street;
-    // const enteredPostalCode = postalCode;
-    // const enteredCity = city;
+    const enteredName = name;
+    const enteredStreet = street;
+    const enteredPostalCode = postalCode;
+    const enteredCity = city;
 
-    console.log(name);
-    console.log(street);
-    console.log(postalCode);
-    console.log(city);
+    const orderData = {
+      name: enteredName,
+      street: enteredStreet,
+      postalCode: enteredPostalCode,
+      city: enteredCity,
+    };
+
+    if (!formIsValid) {
+      return;
+    }
+
+    props.submitDataHandler(orderData);
 
     resetNameHandler();
     resetStreetHandler();
@@ -63,7 +71,7 @@ const Checkout = (props) => {
   };
 
   return (
-    <form onSubmit={formHandler}>
+    <form onSubmit={formHandler} className={classes.form}>
       <div className={`${classes.control} ${nameIsInvalid && classes.invalid}`}>
         <label htmlFor="name">Your Name</label>
         <input
@@ -115,7 +123,7 @@ const Checkout = (props) => {
           onChange={cityHandler}
           onBlur={blurCityHandler}
         />
-        {streetIsInvalid && <p>Please enter a city.</p>}
+        {cityIsInvalid && <p>Please enter a city.</p>}
       </div>
 
       <div className={classes.actions}>
