@@ -29,6 +29,7 @@ const cartReducer = (state, action) => {
     } else {
       //item is added for the first time;
       updatedItems = state.items.concat(action.item); // we're just adding the updated item
+      //updatedItems = [action.item,...state.items]
     }
 
     return {
