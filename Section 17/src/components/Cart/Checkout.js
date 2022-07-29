@@ -73,7 +73,7 @@ const Checkout = (props) => {
   return (
     <form onSubmit={formHandler} className={classes.form}>
       <div className={`${classes.control} ${nameIsInvalid && classes.invalid}`}>
-        <label htmlFor="name">Your Name</label>
+        <label htmlFor="name">Project Name</label>
         <input
           type="text"
           id="name"
@@ -81,13 +81,13 @@ const Checkout = (props) => {
           onChange={nameHandler}
           onBlur={blurNameHandler}
         />
-        {nameIsInvalid && <p>Please enter a name.</p>}
+        {nameIsInvalid && <p>Please enter name of Your project.</p>}
       </div>
 
       <div
         className={`${classes.control} ${streetIsInvalid && classes.invalid}`}
       >
-        <label htmlFor="street">Street</label>
+        <label htmlFor="street">React components affected:</label>
         <input
           type="text"
           id="street"
@@ -95,7 +95,7 @@ const Checkout = (props) => {
           onChange={streetHandler}
           onBlur={blurStreetHandler}
         />
-        {streetIsInvalid && <p>Please enter a street.</p>}
+        {streetIsInvalid && <p>Please enter a name of the component.</p>}
       </div>
 
       <div
@@ -103,7 +103,7 @@ const Checkout = (props) => {
           postalCodeIsInvalid && classes.invalid
         }`}
       >
-        <label htmlFor="postal">Postal code</label>
+        <label htmlFor="postal">Project code:</label>
         <input
           type="text"
           id="postal"
@@ -111,11 +111,11 @@ const Checkout = (props) => {
           onChange={postalCodeHandler}
           onBlur={blurPostalCodeHandler}
         />
-        {postalCodeIsInvalid && <p>Please enter a 5-digit postal code.</p>}
+        {postalCodeIsInvalid && <p>Please enter a 5-digit code.</p>}
       </div>
 
       <div className={`${classes.control} ${cityIsInvalid && classes.invalid}`}>
-        <label htmlFor="city">City</label>
+        <label htmlFor="city">JSX elements affected:</label>
         <input
           type="text"
           id="city"
@@ -123,7 +123,7 @@ const Checkout = (props) => {
           onChange={cityHandler}
           onBlur={blurCityHandler}
         />
-        {cityIsInvalid && <p>Please enter a city.</p>}
+        {cityIsInvalid && <p>Please enter a valid element.</p>}
       </div>
 
       <div className={classes.actions}>

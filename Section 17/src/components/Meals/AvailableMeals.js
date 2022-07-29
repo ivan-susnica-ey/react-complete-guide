@@ -30,7 +30,7 @@ const AvailableMeals = () => {
           loadedMeals.push({
             id: key,
             name: data[key].name,
-            descrption: data[key].description,
+            description: data[key].description,
             price: data[key].price,
           });
         }
