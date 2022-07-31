@@ -8,6 +8,7 @@ import CartProvider from "./store/CartProvider";
 
 function App() {
   const [cartIsShown, setCartIsShown] = useState(false);
+  // showCart / setShowCart ! imenovanje varijabli
 
   const showCartHandler = () => {
     setCartIsShown(true);
