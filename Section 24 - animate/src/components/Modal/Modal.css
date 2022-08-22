@@ -10,7 +10,7 @@
     top: 30%;
     left: 25%;
     width: 50%;
-    /* transition: all 0.3s ease-out; */
+    transition: all 0.3s ease-out;
 }
 
 .ModalOpen {
@@ -18,8 +18,7 @@
 }
 
 .ModalClosed {
-    /* animation: closeModal 0.4s ease-out forwards; */
-    display: none;
+    animation: closeModal 1s ease-out forwards;
 }
 
 @keyframes openModal {
@@ -37,7 +36,7 @@
     }
 }
 
-/* @keyframes closeModal {
+@keyframes closeModal {
     0% {
         opacity: 1;
         transform: translateY(0);
@@ -50,4 +49,4 @@
         opacity: 0;
         transform: translateY(-100%);
     }
-} */
+}
