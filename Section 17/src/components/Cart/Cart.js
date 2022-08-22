@@ -4,7 +4,7 @@ import Modal from "../UI/Modal";
 import CartItem from "./CartItem";
 import Checkout from "./Checkout";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CartContext from "../../store/cart-context";
 
 const Cart = (props) => {
