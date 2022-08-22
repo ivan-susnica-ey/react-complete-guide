@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+
+let logoutTimer;
 
 const AuthContext = React.createContext({
   token: "",
@@ -8,17 +10,26 @@ const AuthContext = React.createContext({
 });
 
 export const AuthContextProvider = (props) => {
-  const [token, setToken] = useState(null);
+  const initialToken = localStorage.getItem("token");
+
+  const [token, setToken] = useState(initialToken);
 
   const userIsLoggedIn = !!token;
-  //javascript trick - checking if token is truthy :)
 
-  const loginHandler = (token) => {
-    setToken(token);
-  };
-
-  const logoutHandler = () => {
+  const logoutHandler = useCallback(() => {
     setToken(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("expirationTime");
+
+    if (logoutTimer) {
+      clearTimeout(logoutTimer);
+    }
+  }, []);
+
+  const loginHandler = (token, expirationTime) => {
+    setToken(token);
+    console.log(token, "login handler");
+    localStorage.setItem("token", token);
   };
 
   const contextValue = {
