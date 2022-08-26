@@ -4,7 +4,7 @@
 
 // Primitives
 
-let age: number;
+let age: number = 12;
 
 age = 12;
 
@@ -18,7 +18,7 @@ isInstructor = true;
 
 // More complex types
 
-let hobbies: string[];
+let hobbies: string[] = ["Sports","Cooking"]
 
 hobbies = ['Sports', 'Cooking'];
 
